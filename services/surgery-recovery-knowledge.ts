@@ -1,0 +1,213 @@
+import { DailyRecoveryMilestone, SurgeryCategory, StitchType } from '@/types/surgery-recovery';
+
+export interface SurgeryCategoryMeta {
+  category: SurgeryCategory;
+  nameBn: string;
+  nameEn: string;
+  icon: string;
+  defaultStitchDay: number;
+  stitchTypeOptions: StitchType[];
+  liftingLimitBn: string;
+  dressingRuleSummaryBn: string;
+  keyWarningBn: string;
+}
+
+export const SURGERY_CATEGORIES: SurgeryCategoryMeta[] = [
+  {
+    category: 'C_SECTION',
+    nameBn: 'সিজারিয়ান সেকশন ও প্রসব পরবর্তী যত্ন',
+    nameEn: 'C-Section & Post-Maternity Care',
+    icon: 'child-care',
+    defaultStitchDay: 10,
+    stitchTypeOptions: ['NON_ABSORBABLE_STITCH', 'ABSORBABLE_STITCH', 'SURGICAL_STAPLES', 'DERMABOND_GLUE'],
+    liftingLimitBn: 'বাচ্চার ওজনের বেশি (৫ কেজির বেশি) কোনো ভারী জিনিস তোলা সম্পূর্ণ নিষেধ।',
+    dressingRuleSummaryBn: 'ওয়াটারপ্রুফ ব্যান্ডেজ না থাকলে ক্ষতস্থানে পানি লাগানো যাবে না।',
+    keyWarningBn: 'অতিরিক্ত রক্তক্ষরণ বা পেটে তীব্র চাপ অনুভব করলে অবিলম্বে গাইনি বিশেষজ্ঞকে জানান।',
+  },
+  {
+    category: 'LAPAROSCOPY_CHOLE',
+    nameBn: 'ল্যাপারোস্কোপিক পিত্তথলি ও পেট সার্জারি',
+    nameEn: 'Laparoscopic Cholecystectomy & Abdominal',
+    icon: 'healing',
+    defaultStitchDay: 7,
+    stitchTypeOptions: ['ABSORBABLE_STITCH', 'NON_ABSORBABLE_STITCH', 'DERMABOND_GLUE'],
+    liftingLimitBn: 'প্রথম ২ সপ্তাহ ৪-৫ কেজির বেশি ভারি বস্তু তুলবেন না।',
+    dressingRuleSummaryBn: 'ছোট ৩-৪টি পোর্ট সাইটের ব্যান্ডেজ শুষ্ক রাখুন। ৭ম দিনে ডাক্তারের পরামর্শে ব্যান্ডেজ খুলুন।',
+    keyWarningBn: 'অপারেশনের সময় পেটে দেওয়া কার্বন-ডাই-অক্সাইড গ্যাসের কারণে কাঁধে হালকা ব্যথা হতে পারে, যা স্বাভাবিক।',
+  },
+  {
+    category: 'APPENDECTOMY',
+    nameBn: 'এপেন্ডিসেক্টমি (এপেন্ডিক্স অপারেশন)',
+    nameEn: 'Appendectomy Recovery',
+    icon: 'medical-services',
+    defaultStitchDay: 8,
+    stitchTypeOptions: ['NON_ABSORBABLE_STITCH', 'ABSORBABLE_STITCH', 'SURGICAL_STAPLES'],
+    liftingLimitBn: 'প্রথম ৩ সপ্তাহ ভারী ব্যায়াম বা ওজন তোলা এড়িয়ে চলুন।',
+    dressingRuleSummaryBn: 'ক্ষতস্থান শুকনো ও পরিষ্কার রাখুন। সেলাই কাটার পূর্বে গোসল করবেন না।',
+    keyWarningBn: 'পেটে তীব্র ফোলাভাব বা বমি শুরু হলে সার্জারি টিমের সাথে জরুরি যোগাযোগ করুন।',
+  },
+  {
+    category: 'HERNIA_REPAIR',
+    nameBn: 'হার্নিয়া ও মেশ রিপেয়ার সার্জারি',
+    nameEn: 'Hernia Repair & Mesh Placement',
+    icon: 'shield',
+    defaultStitchDay: 10,
+    stitchTypeOptions: ['NON_ABSORBABLE_STITCH', 'ABSORBABLE_STITCH'],
+    liftingLimitBn: 'কমপক্ষে ৬ সপ্তাহ কোনো প্রকার ভারী ওজন তোলা বা পেটে চাপ দেওয়া সম্পূর্ণ নিষিদ্ধ।',
+    dressingRuleSummaryBn: 'ইনগুইনাল বা এবডোমিনাল ক্ষতের চাপমুক্ত ড্রেসিং বজায় রাখুন।',
+    keyWarningBn: 'কোষ্ঠকাঠিন্য ও অতিরিক্ত কাশি মেশ সরে যাওয়ার ঝুঁকি তৈরি করে; ইসবগুল ও ফাইবারসমৃদ্ধ খাবার খান।',
+  },
+  {
+    category: 'ORTHOPEDIC_JOINT',
+    nameBn: 'অর্থোপেডিক হাড় ভাঙা ও জয়েন্ট সার্জারি',
+    nameEn: 'Orthopedic Fracture & Joint Replacement',
+    icon: 'accessibility',
+    defaultStitchDay: 14,
+    stitchTypeOptions: ['SURGICAL_STAPLES', 'NON_ABSORBABLE_STITCH'],
+    liftingLimitBn: 'সার্জনের নির্দেশিত পূর্ণ বা আংশিক ওজন বহন (Weight Bearing) নিয়ম মেনে চলুন।',
+    dressingRuleSummaryBn: 'প্লাস্টার বা স্প্লিন্ট যাতে না ভিজে সেদিকে সর্বোচ্চ সতর্কতা অবলম্বন করুন।',
+    keyWarningBn: 'আক্রান্ত অঙ্গ বালিশ দিয়ে কিছুটা উঁচুতে রাখুন যাতে ফোলা ও দপদপানি কমে।',
+  },
+  {
+    category: 'GENERAL_SURGERY',
+    nameBn: 'জেনারেল ও মাইনর সার্জারি',
+    nameEn: 'General & Minor Surgical Procedures',
+    icon: 'local-hospital',
+    defaultStitchDay: 9,
+    stitchTypeOptions: ['NON_ABSORBABLE_STITCH', 'ABSORBABLE_STITCH'],
+    liftingLimitBn: 'ক্ষতের স্থানে যাতে কোনো টান বা চাপ না লাগে সেদিকে খেয়াল রাখুন।',
+    dressingRuleSummaryBn: 'প্রতি ২-৩ দিন পর পর অথবা ভিজে গেলে ক্লিনিক্যাল ড্রেসিং পরিবর্তন করুন।',
+    keyWarningBn: 'ডাক্তারের নির্ধারিত অ্যান্টিবায়োটিকের সম্পূর্ণ কোর্স শেষ করুন।',
+  },
+];
+
+export function get14DayMilestones(category: SurgeryCategory): DailyRecoveryMilestone[] {
+  return [
+    {
+      dayNumber: 1,
+      phaseTitleBn: 'হাসপাতাল রিলিজ ও সম্পূর্ণ বিশ্রাম',
+      keyFocusBn: 'অ্যানাস্থেসিয়ার প্রভাব থেকে নিরাময় ও নির্ধারিত ব্যথানাশক সঠিক সময়ে সেবন।',
+      painExpectationBn: 'মাঝারি থেকে তীব্র ব্যথা স্বাভাবিক; চিকিৎসকের ব্যথার ওষুধে নিয়ন্ত্রণে থাকবে।',
+      dressingAndShowerRuleBn: 'ব্যান্ডেজ ১০০% শুকনো রাখতে হবে। গোসল সম্পূর্ণ নিষেধ।',
+      activityLevelBn: 'বিছানায় সম্পূর্ণ বিশ্রাম। রক্ত চলাচল সচল রাখতে পায়ের গোড়ালি হালকা নাড়াচাড়া করুন।',
+      nutritionTipBn: 'হালকা তরল, সুপ ও জাউ ভাত। ভারী ও তৈলাক্ত খাবার সম্পূর্ণ বর্জন।',
+    },
+    {
+      dayNumber: 2,
+      phaseTitleBn: 'প্রাথমিক মোবিলাইজেশন ও বায়ু চলাচল',
+      keyFocusBn: 'অপারেশনের পর অন্ত্রের স্বাভাবিক চলাচল (Bowel movement) শুরু হওয়া।',
+      painExpectationBn: 'নড়াচড়া করার সময় ক্ষতে টান বা ব্যথা লাগতে পারে; সাপোর্ট দিয়ে উঠুন।',
+      dressingAndShowerRuleBn: 'ব্যান্ডেজ শুকনো রাখুন। ক্ষতের বাইরে স্পঞ্জ দিয়ে শরীর মুছুন।',
+      activityLevelBn: 'কারো সাহায্য নিয়ে ঘরের মধ্যে দিনে ২-৩ বার ২ মিনিট করে ধীরেসুস্থে হাঁটুন।',
+      nutritionTipBn: 'প্রচুর পানি (২.৫ লিটার), পেঁপে ও ফাইবারসমৃদ্ধ খাবার যাতে কোষ্ঠকাঠিন্য না হয়।',
+    },
+    {
+      dayNumber: 3,
+      phaseTitleBn: 'ক্ষতের প্রাথমিক সিলিং ও ফোলা পর্যবেক্ষণ',
+      keyFocusBn: 'ক্ষতের চামড়া জোড়া লাগা শুরু হয়। ফোলাভাব ও লালচে ভাব অতিরিক্ত বাড়ছে কি না দেখুন।',
+      painExpectationBn: 'ব্যথার তীব্রতা কিছুটা কমতে শুরু করবে।',
+      dressingAndShowerRuleBn: 'ব্যান্ডেজ অক্ষত রাখুন। ব্যান্ডেজে রক্ত বা রস চুইয়ে বের হলে ড্রেসিং বদলান।',
+      activityLevelBn: 'সোজা হয়ে বসা ও ঘরের মধ্যে ছোট ছোট বিরতিতে হাঁটা।',
+      nutritionTipBn: 'ডিম, মুরগির মাংসের নরম অংশ ও প্রোটিন যা টিস্যু পুনর্গঠনে সাহায্য করে।',
+    },
+    {
+      dayNumber: 4,
+      phaseTitleBn: 'অ্যান্টিবায়োটিক কমপ্লায়েন্স ও রুটিন কেয়ার',
+      keyFocusBn: 'অ্যান্টিবায়োটিকের অর্ধেক কোর্স সম্পন্ন। ডোজ কখনোই মিস করবেন না।',
+      painExpectationBn: 'হাঁটাহাঁটির সময় হালকা টনটন করতে পারে।',
+      dressingAndShowerRuleBn: 'শুকনো ড্রেসিং। কোনো মলম বা তেল নিজে থেকে ক্ষতে লাগাবেন না।',
+      activityLevelBn: 'খাবারের পর ৫ মিনিট ঘরের ভেতর ধীরেসুস্থে পায়চারি।',
+      nutritionTipBn: 'ভিটামিন সি (কমলা, মাল্টা, পেয়ারা) গ্রহণ করুন—এটি কোলাজেন তৈরিতে দ্রুত কাজ করে।',
+    },
+    {
+      dayNumber: 5,
+      phaseTitleBn: 'ইনফেকশন স্ক্রিনিং ও ক্ষতের কিনারা পরীক্ষা',
+      keyFocusBn: 'কোনো পুঁজ, দুর্গন্ধ বা অস্বাভাবিক তাপমাত্রা (১০১°F) আছে কি না ৫-পয়েন্ট স্ক্রিনারে চেক করুন।',
+      painExpectationBn: 'ব্যথা কমে আসবে; অতিরিক্ত দপদপানি বা জ্বালাপোড়া থাকা উচিত নয়।',
+      dressingAndShowerRuleBn: 'ডাক্তারের পরামর্শ থাকলে ওয়াটারপ্রুফ প্যাচ ছাড়া সাধারণ ব্যান্ডেজ শুষ্ক রাখুন।',
+      activityLevelBn: 'নিজের হালকা কাজ (যেমন নিজে পানি ঢেলে খাওয়া) করতে পারেন।',
+      nutritionTipBn: 'দুধ, ছানা বা ডাল থেকে দৈনিক পর্যাপ্ত ক্যালসিয়াম ও জিংক গ্রহণ।',
+    },
+    {
+      dayNumber: 6,
+      phaseTitleBn: 'ক্ষতের চুলকানি ও হিলিং স্টেজ',
+      keyFocusBn: 'ক্ষতে হালকা চুলকানি অনুভূত হওয়া নতুন চামড়া গজানোর স্বাভাবিক লক্ষণ; তবে চুলকানো নিষেধ।',
+      painExpectationBn: 'ব্যথানাশক ওষুধের প্রয়োজন কমে আসবে।',
+      dressingAndShowerRuleBn: 'ড্রেসিং শুকনো রাখুন। ক্ষতে হাত দেওয়া বা খোঁটাখুঁটি করা যাবে না।',
+      activityLevelBn: 'দিনে ১৫-২০ মিনিট সর্বমোট হালকা হাঁটা।',
+      nutritionTipBn: 'টাক বা এলার্জি বলে মাছ-মাংস বন্ধ করবেন না; অপারেশনের ক্ষত সারাতে প্রোটিন অপরিহার্য।',
+    },
+    {
+      dayNumber: 7,
+      phaseTitleBn: '১ম সপ্তাহের মাইলফলক ও ল্যাপারোস্কোপি রিভিউ',
+      keyFocusBn: 'ল্যাপারোস্কোপিক সার্জারির ক্ষেত্রে আজ ডাক্তার দেখানো বা ব্যান্ডেজ রিমুভালের সম্ভাব্য দিন।',
+      painExpectationBn: 'অপারেশনের তীব্র ব্যথা অনেকটাই দূরীভূত হয়ে স্বাভাবিক চলাফেরা সহজ হবে।',
+      dressingAndShowerRuleBn: 'ল্যাপারোস্কোপিতে আজ সার্জন পরীক্ষা করে ওয়াটারপ্রুফ ব্যান্ডেজ অনুমোদন দিতে পারেন।',
+      activityLevelBn: 'ধীরে ধীরে স্বাভাবিক ঘরের কাজ শুরু করা যায়।',
+      nutritionTipBn: 'স্বাভাবিক ঘরের রান্না করা সুষম খাবার।',
+    },
+    {
+      dayNumber: 8,
+      phaseTitleBn: 'সেলাই কাটার পূর্ব প্রস্তুতি',
+      keyFocusBn: 'সেলাই বা স্ট্যাপলারের চারপাশে কোনো লাল দাগ বা রক্তচলাচলের সমস্যা আছে কি না দেখা।',
+      painExpectationBn: 'শুধুমাত্র ভারী নড়াচড়ায় হালকা টান লাগবে।',
+      dressingAndShowerRuleBn: 'ক্ষত পরিষ্কার রাখুন। অ্যান্টিসেপ্টিক ওয়াইপ দিয়ে চারপাশ জীবাণুমুক্ত রাখুন।',
+      activityLevelBn: 'স্বাভাবিক চলাফেরা। তবে সিঁড়ি দিয়ে বেশি ওঠানামা করবেন না।',
+      nutritionTipBn: 'পর্যাপ্ত পানি ও ফলমূল খাওয়া অব্যাহত রাখুন।',
+    },
+    {
+      dayNumber: 9,
+      phaseTitleBn: 'সার্জন ক্লিনিক অ্যাপয়েন্টমেন্ট শিডিউলিং',
+      keyFocusBn: '১০ম দিনের সেলাই কাটার জন্য সার্জারি ক্লিনিক বা হাসপাতালে অ্যাপয়েন্টমেন্ট নিশ্চিত করা।',
+      painExpectationBn: 'ন্যূনতম ব্যথা। ব্যথানাশক সাধারণত আর প্রয়োজন পড়ে না।',
+      dressingAndShowerRuleBn: 'সেলাই কাটার আগে ব্যান্ডেজ খোলার কোনো চেষ্টা করবেন না।',
+      activityLevelBn: 'টানা বেশিক্ষণ বসে না থেকে মাঝে মাঝে দাঁড়িয়ে হাঁটাচলা করুন।',
+      nutritionTipBn: 'পুষ্টিকর স্বাভাবিক খাবার।',
+    },
+    {
+      dayNumber: 10,
+      phaseTitleBn: 'সেলাই কাটা / স্ট্যাপল রিমুভাল ডে (মাইলফলক)',
+      keyFocusBn: 'সিজারিয়ান, এপেন্ডিক্স ও হার্নিয়া রোগীদের সেলাই কাটার প্রধান দিন। বিশেষজ্ঞ নার্স বা সার্জন দিয়ে কাটুন।',
+      painExpectationBn: 'সেলাই কাটার সময় সামান্য পিঁপড়ের কামড়ের মতো লাগতে পারে; তীব্র ব্যথা হয় না।',
+      dressingAndShowerRuleBn: 'সেলাই কাটার পর ২৪ ঘণ্টা সেখানে পানি লাগানো যাবে না। এরপর হালকা সাবান পানিতে ধোয়া যাবে।',
+      activityLevelBn: 'সেলাই কাটার পরও হঠাৎ পেটে টান লাগার মতো কাজ করবেন না।',
+      nutritionTipBn: 'ভিটামিন ই ও জিংক সমৃদ্ধ খাবার যা দাগ মসৃণ করতে সহায়ক।',
+    },
+    {
+      dayNumber: 11,
+      phaseTitleBn: 'পোস্ট-সিউচার হিলিং ও প্রথম ওয়াটার বাথ প্রস্তুতি',
+      keyFocusBn: 'সেলাইয়ের ছিদ্রগুলো ২৪ ঘণ্টার মধ্যে বন্ধ হয়ে যায়।',
+      painExpectationBn: 'কোনো অস্বস্তি বা টান লাগা কমে যাবে।',
+      dressingAndShowerRuleBn: 'সার্জনের অনুমতি থাকলে ক্ষতের উপর আলতো করে হালকা কুসুম গরম পানিতে গোসল করা যায়। ঘষাঘষি নিষেধ।',
+      activityLevelBn: 'স্বাভাবিক ঘরের কাজকর্ম ও ব্যক্তিগত যত্ন।',
+      nutritionTipBn: 'প্রচুর তরল ও অ্যান্টিঅক্সিডেন্ট সমৃদ্ধ সবুজ শাকসবজি।',
+    },
+    {
+      dayNumber: 12,
+      phaseTitleBn: 'অর্থোপেডিক ও গভীর ক্ষতের হিলিং স্টেজ',
+      keyFocusBn: 'অর্থোপেডিক ও জয়েন্ট রোগীদের সেলাই কাটার সম্ভাব্য সময় ঘনিয়ে আসছে।',
+      painExpectationBn: 'জয়েন্ট শক্ত হওয়া রোধে ফিজিওথেরাপির মৃদু ব্যায়াম শুরু করা যায়।',
+      dressingAndShowerRuleBn: 'ক্ষতের দাগ যাতে রোদে পুড়ে কালো না হয় সেদিকে খেয়াল রাখুন।',
+      activityLevelBn: 'ফিজিওথেরাপিস্টের নির্দেশ অনুযায়ী স্ট্রেচিং ও ওয়াকিং।',
+      nutritionTipBn: 'হাড় ও লিগামেন্ট দ্রুত মজবুত করার জন্য ভিটামিন ডি ও ক্যালসিয়াম।',
+    },
+    {
+      dayNumber: 13,
+      phaseTitleBn: 'স্কার টিস্যু ও দাগের পরিচর্যা',
+      keyFocusBn: 'ক্ষতের উপর জমা শক্ত খোসা (Scab) নিজ থেকে পড়তে দিন; হাত দিয়ে খোসা তুলবেন না।',
+      painExpectationBn: 'সম্পূর্ণ ব্যথামুক্ত স্বাভাবিক অনুভূতি।',
+      dressingAndShowerRuleBn: 'ক্ষত উন্মুক্ত রাখা যায়, অতিরিক্ত ঘাম হলে মুছে পরিষ্কার রাখুন।',
+      activityLevelBn: 'ঘরের বাইরে হালকা সান্ধ্যকালীন হাঁটা শুরু করতে পারেন।',
+      nutritionTipBn: 'স্বাস্থ্যকর ঘরোয়া ব্যালান্সড ডায়েট।',
+    },
+    {
+      dayNumber: 14,
+      phaseTitleBn: '২ সপ্তাহের পূর্ণাঙ্গ রিকভারি মাইলফলক',
+      keyFocusBn: 'প্রাথমিক সার্জিক্যাল হিলিং সম্পন্ন! অর্থোপেডিক সেলাই কাটা সম্পন্ন ও দীর্ঘমেয়াদী লাইফস্টাইল শুরু।',
+      painExpectationBn: 'স্বাভাবিক ও নিরাপদ।',
+      dressingAndShowerRuleBn: 'স্বাভাবিক গোসল ও স্কিন কেয়ার। দাগ কমানোর সিলিকন জেল বা ভিটামিন ই ক্রিম ব্যবহার শুরু করা যায়।',
+      activityLevelBn: 'অফিসের হালকা কাজ বা ড্রাইভ করা শুরু করা যায় (সার্জনের ছাড়পত্র সাপেক্ষে)।',
+      nutritionTipBn: 'নিয়মিত পুষ্টিকর খাদ্যতালিকা বজায় রাখুন।',
+    },
+  ];
+}

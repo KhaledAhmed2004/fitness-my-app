@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="Join IronForge Fitness Arena — fast mobile enrollment. No app needed." />
+  <title>Join IronForge Fitness 💪</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #25D366;
+      --green-dim: rgba(37,211,102,0.15);
+      --green-border: rgba(37,211,102,0.3);
+      --bg: #0D1117;
+      --surface: #161D24;
+      --border: rgba(255,255,255,0.08);
+      --text: #F0F6FF;
+      --muted: rgba(240,246,255,0.45);
+      --accent: #89FE00;
+      --radius: 16px;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100dvh;
+    }
+
+    /* ── LAYOUT ─────────────────────────────────────────────────────────── */
+    .shell {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── HEADER ─────────────────────────────────────────────────────────── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 28px 20px 20px;
+      background: var(--surface);
+      border-radius: 24px;
+      border: 1px solid var(--green-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(37,211,102,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .gym-logo {
+      width: 64px; height: 64px;
+      border-radius: 20px;
+      background: var(--green-dim);
+      border: 1.5px solid var(--green-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .gym-name {
+      font-size: 20px; font-weight: 800; letter-spacing: -0.4px;
+      text-align: center;
+    }
+    .gym-tag {
+      font-size: 12px; color: var(--muted); text-align: center; line-height: 1.5;
+    }
+    .wa-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 12px; font-weight: 600; color: var(--green);
+    }
+
+    /* ── STEPS STRIP ────────────────────────────────────────────────────── */
+    .steps {
+      display: flex;
+      gap: 8px;
+    }
+    .step {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 10px 6px;
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      text-align: center;
+    }
+    .step span { font-size: 20px; }
+
+    /* ── FORM CARD ──────────────────────────────────────────────────────── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px 18px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .form-card h2 {
+      font-size: 15px; font-weight: 700; letter-spacing: -0.2px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .field input,
+    .field select {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 14px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field select:focus { border-color: var(--green); }
+    .field select option { background: #161D24; color: #F0F6FF; }
+
+    /* ── PLAN PICKER ────────────────────────────────────────────────────── */
+    .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .plan-option { display: none; }
+    .plan-label {
+      display: flex; flex-direction: column; gap: 3px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid var(--border);
+      border-radius: 13px;
+      padding: 12px 10px;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .plan-label:hover { border-color: rgba(37,211,102,0.45); }
+    .plan-option:checked + .plan-label {
+      border-color: var(--green);
+      background: var(--green-dim);
+    }
+    .plan-name { font-size: 13px; font-weight: 700; }
+    .plan-price { font-size: 18px; font-weight: 800; color: var(--accent); }
+    .plan-dur { font-size: 10px; color: var(--muted); }
+
+    /* Annual badge */
+    .plan-popular {
+      display: flex; align-items: center;
+      background: var(--accent); color: #000;
+      font-size: 8px; font-weight: 800;
+      border-radius: 6px; padding: 2px 5px;
+      letter-spacing: 0.3px; width: fit-content;
+    }
+
+    /* ── PAYMENT TOGGLE ─────────────────────────────────────────────────── */
+    .pay-grid { display: flex; gap: 8px; }
+    .pay-option { display: none; }
+    .pay-label {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid var(--border);
+      border-radius: 13px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+    .pay-label:hover { border-color: rgba(37,211,102,0.45); }
+    .pay-option:checked + .pay-label {
+      border-color: var(--green);
+      background: var(--green-dim);
+    }
+    .pay-emoji { font-size: 22px; }
+    .pay-name { font-size: 12px; font-weight: 700; }
+
+    /* ── CTA BUTTON ─────────────────────────────────────────────────────── */
+    .cta {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--green);
+      color: #000; font-size: 16px; font-weight: 800;
+      border: none; border-radius: 16px;
+      padding: 16px 20px; width: 100%;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .cta:active { transform: scale(0.97); opacity: 0.9; }
+    .cta:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── SUCCESS STATE ──────────────────────────────────────────────────── */
+    .success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 32px 20px;
+      background: var(--surface);
+      border: 1px solid var(--green-border);
+      border-radius: 24px;
+      text-align: center;
+    }
+    .success.visible { display: flex; }
+    .success-icon { font-size: 52px; }
+    .success h2 { font-size: 20px; font-weight: 800; }
+    .success p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .success-id {
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: 12px; padding: 10px 20px;
+      font-size: 18px; font-weight: 800; color: var(--green); letter-spacing: 1px;
+    }
+    .wa-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--green); color: #000;
+      font-size: 14px; font-weight: 700;
+      border-radius: 14px; padding: 14px 24px;
+      text-decoration: none; width: 100%;
+    }
+
+    /* ── ERROR ──────────────────────────────────────────────────────────── */
+    .error-msg {
+      display: none; background: rgba(250,82,82,0.1); border: 1px solid rgba(250,82,82,0.3);
+      border-radius: 12px; padding: 10px 14px;
+      font-size: 13px; color: #FA5252;
+    }
+    .error-msg.visible { display: block; }
+
+    /* ── FOOTER ─────────────────────────────────────────────────────────── */
+    .footer {
+      text-align: center; font-size: 11px; color: var(--muted); line-height: 1.7;
+    }
+    .footer a { color: var(--green); text-decoration: none; }
+
+    /* ── SPINNER ─────────────────────────────────────────────────────────── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .spinner.visible { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+
+<body>
+<div class="shell">
+
+  <!-- HERO HEADER -->
+  <div class="hero">
+    <div class="gym-logo">💪</div>
+    <div class="gym-name">IronForge Fitness Arena</div>
+    <div class="gym-tag">Level 4, Road 11, Block D, Banani<br>Dhaka, Bangladesh</div>
+    <div class="wa-badge">
+      <span>📲</span> WhatsApp Enrollment
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS STEPS -->
+  <div class="steps">
+    <div class="step"><span>📝</span>Fill Form</div>
+    <div class="step"><span>✅</span>Confirmed</div>
+    <div class="step"><span>🎫</span>Get Pass</div>
+    <div class="step"><span>🏋️</span>Train!</div>
+  </div>
+
+  <!-- ENROLLMENT FORM -->
+  <div class="form-card" id="formCard">
+    <h2>🎽 New Member Registration</h2>
+
+    <div class="field">
+      <label>Full Name</label>
+      <input id="name" type="text" placeholder="e.g. Rahim Ahmed" autocomplete="name" required />
+    </div>
+
+    <div class="field">
+      <label>Phone Number</label>
+      <input id="phone" type="tel" placeholder="01711-XXXXXX" autocomplete="tel" required />
+    </div>
+
+    <div class="field">
+      <label>Age</label>
+      <input id="age" type="number" placeholder="25" min="12" max="80" required />
+    </div>
+
+    <div class="field">
+      <label>Gender</label>
+      <select id="gender">
+        <option value="">— Select —</option>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
+
+    <!-- PLAN PICKER -->
+    <div class="field">
+      <label>Membership Plan</label>
+      <div class="plan-grid">
+        <input class="plan-option" type="radio" name="plan" id="p1" value="MONTHLY" />
+        <label class="plan-label" for="p1">
+          <span class="plan-name">Monthly</span>
+          <span class="plan-price">৳2,500</span>
+          <span class="plan-dur">30 days</span>
+        </label>
+
+        <input class="plan-option" type="radio" name="plan" id="p2" value="QUARTERLY" />
+        <label class="plan-label" for="p2">
+          <span class="plan-name">Quarterly</span>
+          <span class="plan-price">৳6,500</span>
+          <span class="plan-dur">3 months</span>
+        </label>
+
+        <input class="plan-option" type="radio" name="plan" id="p3" value="HALF_YEARLY" />
+        <label class="plan-label" for="p3">
+          <span class="plan-name">6 Months</span>
+          <span class="plan-price">৳11,500</span>
+          <span class="plan-dur">6 months</span>
+        </label>
+
+        <input class="plan-option" type="radio" name="plan" id="p4" value="ANNUAL" />
+        <label class="plan-label" for="p4">
+          <span class="plan-popular">BEST VALUE</span>
+          <span class="plan-name">Annual</span>
+          <span class="plan-price">৳22,000</span>
+          <span class="plan-dur">12 months</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- PAYMENT METHOD -->
+    <div class="field">
+      <label>Payment Method</label>
+      <div class="pay-grid">
+        <input class="pay-option" type="radio" name="payment" id="pm1" value="BKASH" />
+        <label class="pay-label" for="pm1">
+          <span class="pay-emoji">📱</span>
+          <span class="pay-name">bKash</span>
+        </label>
+
+        <input class="pay-option" type="radio" name="payment" id="pm2" value="NAGAD" />
+        <label class="pay-label" for="pm2">
+          <span class="pay-emoji">💸</span>
+          <span class="pay-name">Nagad</span>
+        </label>
+
+        <input class="pay-option" type="radio" name="payment" id="pm3" value="CASH" />
+        <label class="pay-label" for="pm3">
+          <span class="pay-emoji">💵</span>
+          <span class="pay-name">Cash</span>
+        </label>
+
+        <input class="pay-option" type="radio" name="payment" id="pm4" value="CARD" />
+        <label class="pay-label" for="pm4">
+          <span class="pay-emoji">💳</span>
+          <span class="pay-name">Card</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ERROR MESSAGE -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- SUBMIT -->
+    <button class="cta" id="submitBtn" onclick="handleSubmit()">
+      <div class="spinner" id="spinner"></div>
+      <span id="btnLabel">Enroll Now 🎫</span>
+    </button>
+  </div>
+
+  <!-- SUCCESS CARD (shown after submit) -->
+  <div class="success" id="successCard">
+    <div class="success-icon">🎉</div>
+    <h2>Welcome to IronForge!</h2>
+    <p>Your enrollment is confirmed. Show this to the front desk or wait for your WhatsApp receipt.</p>
+    <div class="success-id" id="memberId">GYM-2026-XXXX</div>
+    <p id="successDetails" style="font-size:12px;color:rgba(240,246,255,0.5)"></p>
+    <a class="wa-cta" id="waReceiptLink" href="#" target="_blank">
+      📲 Open Receipt on WhatsApp
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <p class="footer">
+    By enrolling you agree to our <a href="#">Terms & Conditions</a>.<br>
+    Questions? Call <a href="tel:+8801711009988">+880 1711-009988</a>
+  </p>
+
+</div>
+
+<script>
+  // ── CONFIG — update before deploying ─────────────────────────────────────
+  const CONFIG = {
+    // Your Express backend URL (with trailing slash removed)
+    apiUrl: 'https://your-backend.railway.app/api/gym/members/whatsapp-enroll',
+    // Gym WhatsApp number (international format, no +)
+    gymPhone: '8801711009988',
+    gymName: 'IronForge Fitness Arena',
+    // Plan fee lookup
+    planFees: {
+      MONTHLY: 2500, QUARTERLY: 6500, HALF_YEARLY: 11500, ANNUAL: 22000
+    },
+    planTitles: {
+      MONTHLY: 'Monthly', QUARTERLY: 'Quarterly', HALF_YEARLY: '6-Month', ANNUAL: 'Annual'
+    }
+  };
+
+  function getRadioValue(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+
+  function hideError() {
+    document.getElementById('errorMsg').classList.remove('visible');
+  }
+
+  function setLoading(on) {
+    document.getElementById('spinner').classList.toggle('visible', on);
+    document.getElementById('btnLabel').textContent = on ? 'Enrolling...' : 'Enroll Now 🎫';
+    document.getElementById('submitBtn').disabled = on;
+  }
+
+  async function handleSubmit() {
+    hideError();
+
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const age = parseInt(document.getElementById('age').value, 10);
+    const gender = document.getElementById('gender').value;
+    const plan = getRadioValue('plan');
+    const payment = getRadioValue('payment');
+
+    // Validate
+    if (!name || name.length < 2) return showError('Please enter your full name.');
+    if (!phone || phone.replace(/\D/g, '').length < 10) return showError('Enter a valid phone number.');
+    if (!age || age < 12 || age > 80) return showError('Age must be between 12 and 80.');
+    if (!gender) return showError('Please select your gender.');
+    if (!plan) return showError('Please select a membership plan.');
+    if (!payment) return showError('Please select a payment method.');
+
+    setLoading(true);
+
+    try {
+      const body = {
+        fullName: name,
+        phone: phone,
+        age: age,
+        gender: gender,
+        membershipPlan: plan,
+        paymentMethod: payment,
+        paidAmountBdt: CONFIG.planFees[plan] || 0,
+        source: 'QR_SELF_ENROLL',
+      };
+
+      const res = await fetch(CONFIG.apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const json = await res.json().catch(() => ({}));
+
+      if (res.ok && json.success !== false) {
+        // Success
+        const memberId = json.memberId || ('GYM-' + Date.now().toString().slice(-6));
+        const startDate = json.startDate || new Date().toISOString().slice(0, 10);
+        const endDate = json.endDate || '—';
+
+        document.getElementById('memberId').textContent = memberId;
+        document.getElementById('successDetails').textContent =
+          `${CONFIG.planTitles[plan]} Plan  •  ${startDate} → ${endDate}`;
+
+        // WhatsApp receipt link
+        const waText = encodeURIComponent(
+          `🎫 IronForge Fitness — Member Receipt\n` +
+          `Member ID: ${memberId}\n` +
+          `Name: ${name}\n` +
+          `Plan: ${CONFIG.planTitles[plan]}\n` +
+          `Valid: ${startDate} → ${endDate}\n` +
+          `Payment: ${payment}\n\n` +
+          `Welcome to IronForge! 💪 Present this at the front desk.`
+        );
+        document.getElementById('waReceiptLink').href =
+          `https://wa.me/${CONFIG.gymPhone}?text=${waText}`;
+
+        // Show success
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('successCard').classList.add('visible');
+
+        // Haptic (if supported)
+        if (navigator.vibrate) navigator.vibrate([80, 60, 120]);
+
+      } else {
+        showError(json.message || 'Enrollment failed. Please try again or ask at the front desk.');
+      }
+    } catch (err) {
+      // Offline/network — generate a temporary local pass
+      const tempId = 'GYM-TMP-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+      document.getElementById('memberId').textContent = tempId;
+      document.getElementById('successDetails').textContent =
+        '⚠️ Offline — Show this temp ID to front desk for confirmation.';
+
+      const waText = encodeURIComponent(
+        `🎫 IronForge — TEMP Enrollment\n` +
+        `Temp ID: ${tempId}\n` +
+        `Name: ${name} • Plan: ${CONFIG.planTitles[plan]}\n\n` +
+        `Please confirm at front desk. 🙏`
+      );
+      document.getElementById('waReceiptLink').href =
+        `https://wa.me/${CONFIG.gymPhone}?text=${waText}`;
+
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successCard').classList.add('visible');
+    } finally {
+      setLoading(false);
+    }
+  }
+</script>
+</body>
+</html>
