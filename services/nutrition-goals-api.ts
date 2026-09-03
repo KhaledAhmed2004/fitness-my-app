@@ -51,7 +51,7 @@ export async function fetchMyNutritionGoals(): Promise<NutritionGoalsApi> {
       method: 'GET',
       path: '/api/v1/nutrition-goals/me',
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && typeof data.dailyCalories === 'number') {
       localNutritionGoals = data;
@@ -73,7 +73,7 @@ export async function upsertMyNutritionGoals(
       path: '/api/v1/nutrition-goals/me',
       auth: true,
       body: localNutritionGoals,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data) return data;
   } catch {

@@ -145,16 +145,24 @@ export async function apiRequest<T>({
         body: body === undefined ? undefined : JSON.stringify(body),
         signal: controller.signal,
       });
-      
+
       console.log(`[API STATUS] ✅ ${res.status}`);
-    } catch (err) {
-      console.error(`[API NETWORK ERROR] ❌`, err);
-      if (err instanceof Error && err.name === 'AbortError') {
+    } catch (err: any) {
+      const errMsg = err?.message || String(err || '');
+      const isAbort =
+        err?.name === 'AbortError' ||
+        errMsg.toLowerCase().includes('cancel') ||
+        errMsg.toLowerCase().includes('abort');
+
+      if (isAbort) {
+        console.log(`[API CANCELED] ⏹️ ${method} ${path}`);
         throw new ApiError({
-          message: 'Request timed out. Check your connection and try again.',
-          statusCode: 408,
+          message: 'Request timed out or was canceled.',
+          statusCode: 499,
         });
       }
+
+      console.warn(`[API NETWORK WARN] ⚠️ ${method} ${path}: ${errMsg}`);
       throw new ApiError({
         message: 'Unable to reach the server. Is the API running?',
         statusCode: 0,

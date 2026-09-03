@@ -73,7 +73,7 @@ export async function fetchHydrationForDate(date: string): Promise<HydrationSumm
       method: 'GET',
       path: `/api/v1/hydration/summary?date=${encodeURIComponent(date)}`,
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && typeof data.consumedMl === 'number') {
       return {
@@ -105,7 +105,7 @@ export async function fetchHydrationGoal(): Promise<HydrationGoalPayload> {
       method: 'GET',
       path: '/api/v1/hydration/goal',
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.goalMl) {
       localGoalMl = data.goalMl;
@@ -129,7 +129,7 @@ export async function setWaterGoalMl(goalMl: number): Promise<HydrationGoalPaylo
       path: '/api/v1/hydration/goal',
       auth: true,
       body: { goalMl: localGoalMl },
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
   } catch {
     /* fallback */
@@ -166,7 +166,7 @@ export async function quickAddWater(input: {
       path: '/api/v1/hydration/quick-add',
       auth: true,
       body,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.entry && data.summary) {
       return {
@@ -198,7 +198,7 @@ export async function deleteWaterLog(waterLogId: string): Promise<DeleteWaterRes
       method: 'DELETE',
       path: `/api/v1/hydration/logs/${encodeURIComponent(waterLogId)}`,
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.deleted && data.summary) {
       return {

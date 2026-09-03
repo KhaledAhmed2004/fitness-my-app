@@ -91,7 +91,7 @@ export async function fetchFastingProtocols(): Promise<FastingProtocolPreset[]> 
       method: 'GET',
       path: '/api/v1/fasting/protocols',
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data?.length) {
       return data as FastingProtocolPreset[];
@@ -108,7 +108,7 @@ export async function fetchFastingPreference(): Promise<FastingPreference> {
       method: 'GET',
       path: '/api/v1/fasting/preference',
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && (data.protocol || data.id)) {
       return {
@@ -133,7 +133,7 @@ export async function updateFastingPreference(
       path: '/api/v1/fasting/preference',
       auth: true,
       body: input,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.protocol) {
       return data as unknown as FastingPreference;
@@ -158,7 +158,7 @@ export async function fetchActiveFast(): Promise<FastingSessionStatus | null> {
       method: 'GET',
       path: '/api/v1/fasting/active',
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.sessionId) {
       return data as unknown as FastingSessionStatus;
@@ -185,7 +185,7 @@ export async function updateActiveFast(input: { protocol?: string; startedAt?: s
       path: '/api/v1/fasting/active',
       auth: true,
       body: input,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.sessionId) {
       return data as unknown as FastingSessionStatus;
@@ -224,7 +224,7 @@ export async function startFast(input: StartFastingInput = {}): Promise<FastingS
       path: '/api/v1/fasting/start',
       auth: true,
       body: input,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.sessionId) {
       return data as unknown as FastingSessionStatus;
@@ -259,7 +259,7 @@ export async function stopFast(): Promise<FastingSessionStatus> {
       path: '/api/v1/fasting/stop',
       auth: true,
       body: {},
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.sessionId) {
       return data as unknown as FastingSessionStatus;
@@ -296,7 +296,7 @@ export async function cancelFast(): Promise<FastingSessionStatus> {
       path: '/api/v1/fasting/cancel',
       auth: true,
       body: {},
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.sessionId) {
       return data as unknown as FastingSessionStatus;
@@ -336,7 +336,7 @@ export async function fetchFastingHistory(
       method: 'GET',
       path: `/api/v1/fasting/history?page=${page}&limit=${limit}`,
       auth: true,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data?.data) {
       return {
@@ -372,7 +372,7 @@ export async function updateHistoricalFast(
       path: `/api/v1/fasting/history/${sessionId}`,
       auth: true,
       body: input,
-      timeoutMs: 3000,
+      timeoutMs: 8000,
     });
     if (data && data.sessionId) {
       return data as unknown as FastingSessionStatus;
