@@ -182,7 +182,7 @@ export function GymWhatsAppQrModal({ visible, onClose }: Props) {
   }, [members]);
 
   // ── WhatsApp deep-link ───────────────────────────────────────────────────
-  const gymPhone = (gymProfile?.phone || '8801711009988').replace(/[^0-9]/g, '');
+  const gymPhone = (gymProfile?.phone || '8801805659610').replace(/[^0-9]/g, '');
   const waText = encodeURIComponent(`ENROLL – I'd like to join ${gymProfile?.gymName || 'the gym'}! 💪`);
   const waUrl = `https://wa.me/${gymPhone}?text=${waText}`;
   const shortLink = `wa.me/${gymPhone}`;

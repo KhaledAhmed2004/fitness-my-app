@@ -92,7 +92,7 @@ const SEED_GYM_PROFILE: GymProfile = {
   gymName: 'IronForge Fitness Arena',
   tagline: 'Premium Strength, Conditioning & Recovery Hub',
   ownerName: 'Khaled Nayeem',
-  phone: '+880 1711-009988',
+  phone: '+880 1805-659610',
   email: 'director@ironforgegym.com',
   address: 'Level 4, Road 11, Block D, Banani',
   city: 'Dhaka, Bangladesh',
@@ -101,8 +101,8 @@ const SEED_GYM_PROFILE: GymProfile = {
   currentFloorCount: 32,
   logoUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&auto=format&fit=crop&q=80',
   bannerUrl: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&auto=format&fit=crop&q=80',
-  bkashMerchantNumber: '01711009988',
-  nagadMerchantNumber: '01711009988',
+  bkashMerchantNumber: '01805659610',
+  nagadMerchantNumber: '01805659610',
   defaultAdmissionFeeBdt: 1000,
   managerPin: '1234',
 };
@@ -2759,8 +2759,14 @@ export const useGymOwnerStore = create<GymOwnerStoreState>((set, get) => ({
       const raw = await getStorageItem(GYM_STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
+        const storedProfile = parsed.gymProfile || SEED_GYM_PROFILE;
+        if (storedProfile.phone === '+880 1711-009988') {
+          storedProfile.phone = SEED_GYM_PROFILE.phone;
+          storedProfile.bkashMerchantNumber = SEED_GYM_PROFILE.bkashMerchantNumber;
+          storedProfile.nagadMerchantNumber = SEED_GYM_PROFILE.nagadMerchantNumber;
+        }
         set({
-          gymProfile: parsed.gymProfile || SEED_GYM_PROFILE,
+          gymProfile: storedProfile,
           members: parsed.members || SEED_MEMBERS,
           trainers: parsed.trainers || SEED_TRAINERS,
           equipment: parsed.equipment || SEED_EQUIPMENT,
