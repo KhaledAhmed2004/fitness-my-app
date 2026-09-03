@@ -15,6 +15,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
+import QRCode from 'react-native-qrcode-svg';
 import Svg, { Rect, Path } from 'react-native-svg';
 
 import { Vital } from '@/constants/vital-theme';
@@ -32,81 +33,28 @@ type Props = {
   onClose: () => void;
 };
 
-// Generates an authentic, deterministic QR finder pattern & matrix based on member ID string
+// Generates an authentic, scannable QR code based on member ID string
 function SvgMemberQrCode({ memberId, size = 130 }: { memberId: string; size?: number }) {
-  // Deterministic seed from member id
-  const hash = memberId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-
-  // 17x17 grid modules
-  const gridSize = 17;
-  const cellSize = size / gridSize;
-
-  // Build matrix with corner position locators
-  const modules: boolean[][] = useMemo(() => {
-    const grid: boolean[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
-
-    // Helper to draw standard 7x7 QR position finder square
-    const drawFinder = (rStart: number, cStart: number) => {
-      for (let r = 0; r < 7; r++) {
-        for (let c = 0; c < 7; c++) {
-          const isOuterBorder = r === 0 || r === 6 || c === 0 || c === 6;
-          const isInnerSquare = r >= 2 && r <= 4 && c >= 2 && c <= 4;
-          if (isOuterBorder || isInnerSquare) {
-            grid[rStart + r][cStart + c] = true;
-          }
-        }
-      }
-    };
-
-    // Top-Left Finder
-    drawFinder(0, 0);
-    // Top-Right Finder
-    drawFinder(0, gridSize - 7);
-    // Bottom-Left Finder
-    drawFinder(gridSize - 7, 0);
-
-    // Timing lines (row 6 and col 6)
-    for (let i = 8; i < gridSize - 8; i++) {
-      grid[6][i] = i % 2 === 0;
-      grid[i][6] = i % 2 === 0;
-    }
-
-    // Pseudorandom pseudo-data bits based on member hash
-    for (let r = 0; r < gridSize; r++) {
-      for (let c = 0; c < gridSize; c++) {
-        // Skip finder areas
-        const inTopLeft = r < 8 && c < 8;
-        const inTopRight = r < 8 && c >= gridSize - 8;
-        const inBottomLeft = r >= gridSize - 8 && c < 8;
-        if (!inTopLeft && !inTopRight && !inBottomLeft && !(r === 6 || c === 6)) {
-          const val = (r * 13 + c * 19 + hash) % 3 === 0 || (r * c + hash) % 5 === 0;
-          grid[r][c] = val;
-        }
-      }
-    }
-
-    return grid;
-  }, [hash]);
-
+  const qrData = `vital-member:${memberId}`;
   return (
-    <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <Rect width={size} height={size} fill="#FFFFFF" rx={8} />
-      {modules.map((row, r) =>
-        row.map((active, c) => {
-          if (!active) return null;
-          return (
-            <Rect
-              key={`${r}-${c}`}
-              x={c * cellSize}
-              y={r * cellSize}
-              width={cellSize + 0.3}
-              height={cellSize + 0.3}
-              fill="#0F1014"
-            />
-          );
-        })
-      )}
-    </Svg>
+    <View
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 6,
+      }}>
+      <QRCode
+        value={qrData}
+        size={size - 12}
+        color="#0F1014"
+        backgroundColor="#FFFFFF"
+        ecl="M"
+      />
+    </View>
   );
 }
 

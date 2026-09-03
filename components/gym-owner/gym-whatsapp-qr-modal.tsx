@@ -25,6 +25,8 @@ import {
   View,
 } from 'react-native';
 
+import QRCode from 'react-native-qrcode-svg';
+
 import { Vital } from '@/constants/vital-theme';
 import { useThemeColors } from '@/hooks/use-theme-colors';
 import { useGymOwnerStore } from '@/stores/gym-owner-store';
@@ -35,92 +37,29 @@ const { width: SCREEN_W } = Dimensions.get('window');
 const QR_SIZE = Math.min(SCREEN_W - 96, 260);
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Inline QR renderer (no native module required — pure SVG-like boxes via View)
-// For production, swap with react-native-qrcode-svg once installed.
+// Real scannable QR Code renderer using react-native-qrcode-svg
 // ─────────────────────────────────────────────────────────────────────────────
-function SimpleQrPlaceholder({ size, url }: { size: number; url: string }) {
-  // We render a stylised "QR stand-in" that looks authentic on device.
-  // Production: <QRCode value={url} size={size} color="#000" backgroundColor="#fff" />
-  const cellSize = size / 21;
-  const corners = [
-    { top: 0, left: 0 },
-    { top: 0, right: 0 },
-    { bottom: 0, left: 0 },
-  ];
+function ScannableQrCode({ size, url }: { size: number; url: string }) {
+  const innerSize = Math.max(120, size - 24);
   return (
     <View
       style={{
         width: size,
         height: size,
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
+        borderRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
+        padding: 12,
       }}>
-      {/* Corner finder squares */}
-      {corners.map((pos, i) => (
-        <View
-          key={i}
-          style={[
-            {
-              position: 'absolute',
-              width: cellSize * 7,
-              height: cellSize * 7,
-              borderWidth: cellSize * 1.5,
-              borderColor: '#1A1A1A',
-              borderRadius: cellSize,
-            },
-            pos,
-          ]}>
-          <View
-            style={{
-              position: 'absolute',
-              top: cellSize * 1.5,
-              left: cellSize * 1.5,
-              width: cellSize * 3,
-              height: cellSize * 3,
-              backgroundColor: '#1A1A1A',
-              borderRadius: 4,
-            }}
-          />
-        </View>
-      ))}
-      {/* Simulated data modules */}
-      {Array.from({ length: 8 }).map((_, row) =>
-        Array.from({ length: 8 }).map((_, col) => {
-          const filled = (row + col + row * col) % 3 === 0;
-          return filled ? (
-            <View
-              key={`${row}-${col}`}
-              style={{
-                position: 'absolute',
-                top: cellSize * (8 + row * 1.3),
-                left: cellSize * (8 + col * 1.3),
-                width: cellSize * 0.9,
-                height: cellSize * 0.9,
-                backgroundColor: '#1A1A1A',
-                borderRadius: 1,
-              }}
-            />
-          ) : null;
-        })
-      )}
-      {/* Center logo badge */}
-      <View
-        style={{
-          width: size * 0.22,
-          height: size * 0.22,
-          backgroundColor: '#FFFFFF',
-          borderRadius: 8,
-          borderWidth: 2,
-          borderColor: '#25D366',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 10,
-        }}>
-        <Text style={{ fontSize: size * 0.09 }}>💪</Text>
-      </View>
+      <QRCode
+        value={url}
+        size={innerSize}
+        color="#000000"
+        backgroundColor="#FFFFFF"
+        ecl="M"
+      />
     </View>
   );
 }
@@ -255,7 +194,7 @@ export function GymWhatsAppQrModal({ visible, onClose }: Props) {
                 <View style={styles.qrCornerTR} />
                 <View style={styles.qrCornerBL} />
                 <View style={styles.qrCornerBR} />
-                <SimpleQrPlaceholder size={QR_SIZE} url={waUrl} />
+                <ScannableQrCode size={QR_SIZE} url={waUrl} />
               </Animated.View>
 
               {/* ── INSTRUCTION LABEL ── */}
