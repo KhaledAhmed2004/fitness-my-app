@@ -18,14 +18,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  UIManager,
   View,
 } from 'react-native';
 import Animated, { Easing, FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
