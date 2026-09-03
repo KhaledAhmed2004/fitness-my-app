@@ -73,7 +73,6 @@ export function GymEnrollMemberModal({ visible, onClose, onSuccess }: Props) {
   // Form State
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [weightKg, setWeightKg] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [gender, setGender] = useState<'MALE' | 'FEMALE' | 'OTHER'>('MALE');
@@ -98,7 +97,6 @@ export function GymEnrollMemberModal({ visible, onClose, onSuccess }: Props) {
   const [assignedTrainer, setAssignedTrainer] = useState('');
   const [lockerNumber, setLockerNumber] = useState('');
   const [notes, setNotes] = useState('');
-  const [showOptionalDetails, setShowOptionalDetails] = useState<boolean>(false);
   const [directAge, setDirectAge] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
@@ -279,7 +277,6 @@ export function GymEnrollMemberModal({ visible, onClose, onSuccess }: Props) {
   const resetForm = () => {
     setFullName('');
     setPhone('');
-    setEmail('');
     setWeightKg('');
     setDateOfBirth('');
     setGender('MALE');
@@ -299,7 +296,6 @@ export function GymEnrollMemberModal({ visible, onClose, onSuccess }: Props) {
     setLockerNumber('');
     setNotes('');
     setDirectAge('');
-    setShowOptionalDetails(false);
   };
 
   const handleEnroll = async () => {
@@ -328,7 +324,6 @@ export function GymEnrollMemberModal({ visible, onClose, onSuccess }: Props) {
         {
           fullName: fullName.trim(),
           phone: phone.trim(),
-          email: email.trim() || undefined,
           weightKg: weightKg.trim() ? parseFloat(weightKg.trim()) : undefined,
           gender,
           dateOfBirth: dateOfBirth.trim() || undefined,
@@ -546,41 +541,6 @@ export function GymEnrollMemberModal({ visible, onClose, onSuccess }: Props) {
               />
             </View>
           </View>
-
-          {/* COLLAPSIBLE OPTIONAL DETAILS TOGGLE */}
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => {
-              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-              setShowOptionalDetails(!showOptionalDetails);
-            }}
-            style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10, alignSelf: 'flex-start', paddingVertical: 2 }}>
-            <MaterialIcons
-              name={showOptionalDetails ? 'remove-circle-outline' : 'add-circle-outline'}
-              size={14}
-              color={isDark ? '#89FE00' : '#059669'}
-            />
-            <Text style={{ fontSize: 11, fontFamily: F.sansMedium, color: isDark ? '#89FE00' : '#059669' }}>
-              {showOptionalDetails ? 'Hide Optional Info' : '+ Add Email / Optional Info'}
-            </Text>
-          </TouchableOpacity>
-
-          {showOptionalDetails && (
-            <View style={{ marginTop: 8, gap: 10 }}>
-              <View>
-                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>EMAIL (OPTIONAL)</Text>
-                <TextInput
-                  style={[styles.formInput, { backgroundColor: colors.surface, color: colors.textPrimary, borderColor: colors.border }]}
-                  placeholder="athlete@domain.com"
-                  placeholderTextColor={colors.textMuted}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={email}
-                  onChangeText={setEmail}
-                />
-              </View>
-            </View>
-          )}
 
           {/* PLAN SELECTION */}
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, marginBottom: 8 }}>
