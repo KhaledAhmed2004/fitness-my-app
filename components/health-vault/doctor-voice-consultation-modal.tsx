@@ -1,7 +1,12 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import { Audio } from 'expo-av';
+import {
+  useAudioRecorder,
+  RecordingPresets,
+  requestRecordingPermissionsAsync,
+  setAudioModeAsync,
+} from 'expo-audio';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -63,7 +68,7 @@ export function DoctorVoiceConsultationModal({
   const [activeTab, setActiveTab] = useState<'RECORD' | 'HISTORY'>('RECORD');
 
   // Recording State
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
+  const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const [isRecording, setIsRecording] = useState(false);
   const [recordDuration, setRecordDuration] = useState(0);
   const [recordedUri, setRecordedUri] = useState<string | null>(null);
@@ -98,11 +103,11 @@ export function DoctorVoiceConsultationModal({
   useEffect(() => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
-      if (recording) {
-        recording.stopAndUnloadAsync().catch(() => {});
+      if (recorder.isRecording) {
+        recorder.stop().catch(() => {});
       }
     };
-  }, [recording]);
+  }, [recorder]);
 
   const showToast = (msg: string) => {
     setFeedbackToast(msg);
@@ -112,7 +117,7 @@ export function DoctorVoiceConsultationModal({
   const startRecording = async () => {
     try {
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning).catch(() => {});
-      const permission = await Audio.requestPermissionsAsync();
+      const permission = await requestRecordingPermissionsAsync();
       if (permission.status !== 'granted') {
         Alert.alert(
           'Microphone Permission Required',
@@ -121,16 +126,14 @@ export function DoctorVoiceConsultationModal({
         return;
       }
 
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
+      await setAudioModeAsync({
+        allowsRecording: true,
+        playsInSilentMode: true,
       });
 
-      const { recording: newRecording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
+      await recorder.prepareToRecordAsync();
+      recorder.record();
 
-      setRecording(newRecording);
       setIsRecording(true);
       setRecordDuration(0);
       setRecordedUri(null);
@@ -157,15 +160,12 @@ export function DoctorVoiceConsultationModal({
     }
     setIsRecording(false);
 
-    if (recording) {
-      try {
-        await recording.stopAndUnloadAsync();
-        const uri = recording.getURI();
-        setRecordedUri(uri);
-        setRecording(null);
-      } catch (err) {
-        console.warn('Failed to stop recording:', err);
-      }
+    try {
+      await recorder.stop();
+      const uri = recorder.uri;
+      setRecordedUri(uri);
+    } catch (err) {
+      console.warn('Failed to stop recording:', err);
     }
   };
 

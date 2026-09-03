@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { useFocusEffect } from '@react-navigation/native';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { Vital, TrainingTheme } from '@/constants/vital-theme';
 import * as Haptics from 'expo-haptics';
 import { useState, useCallback } from 'react';

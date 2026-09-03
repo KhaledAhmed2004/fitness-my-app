@@ -21,7 +21,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 import * as Clipboard from 'expo-clipboard';
-import ViewShot from 'react-native-view-shot';
+import ViewShot, { type ViewShotRef } from 'react-native-view-shot';
 
 import { Vital, TrainingTheme } from '@/constants/vital-theme';
 import { useTrainerStore } from '@/stores/trainer-store';
@@ -54,7 +54,7 @@ export function WhatsAppShareCardModal({
   assignedProgram,
 }: WhatsAppShareCardModalProps) {
   const { profile } = useTrainerStore();
-  const viewShotRef = useRef<ViewShot>(null);
+  const viewShotRef = useRef<ViewShotRef>(null);
 
   const [currentMode, setCurrentMode] = useState<WhatsAppShareMode>(initialMode);
   const [isCapturing, setIsCapturing] = useState(false);

@@ -19,8 +19,7 @@ import {
   Manrope_800ExtraBold,
   useFonts as useManrope,
 } from '@expo-google-fonts/manrope';
-import { ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState, useRef } from 'react';

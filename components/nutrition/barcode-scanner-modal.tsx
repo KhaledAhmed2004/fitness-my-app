@@ -66,7 +66,7 @@ export function BarcodeScannerModal({ visible, onClose, onScanned }: Props) {
               </View>
             ) : (
               <CameraView
-                style={StyleSheet.absoluteFillObject}
+                style={StyleSheet.absoluteFill}
                 facing="back"
                 barcodeScannerSettings={{
                   barcodeTypes: ['ean13', 'ean8', 'upc_a', 'upc_e', 'qr'],
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontFamily: F.sansBold,
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
   },

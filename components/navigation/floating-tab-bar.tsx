@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { useEffect, useState } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import type { Tabs } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { Platform, Pressable, Text, View, Dimensions, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -76,7 +76,9 @@ const GYM_OWNER_TAB_META: Record<string, TabMeta> = {
   training: { key: 'training', label: 'Floor Ops', icon: 'fitness-center' },
 };
 
-export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+export type FloatingTabBarProps = Parameters<NonNullable<ComponentProps<typeof Tabs>['tabBar']>>[0];
+
+export function FloatingTabBar({ state, descriptors, navigation }: FloatingTabBarProps) {
   const insets = useSafeAreaInsets();
   const bottomPad = Math.max(insets.bottom, 10);
   const [quickAddOpen, setQuickAddOpen] = useState(false);

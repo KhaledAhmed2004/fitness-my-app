@@ -23,7 +23,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 import * as ImagePicker from 'expo-image-picker';
-import ViewShot from 'react-native-view-shot';
+import ViewShot, { type ViewShotRef } from 'react-native-view-shot';
 
 import { Vital } from '@/constants/vital-theme';
 import { useTrainerStore } from '@/stores/trainer-store';
@@ -44,7 +44,7 @@ export function TransformationProofBuilderModal({
   client,
 }: TransformationProofBuilderModalProps) {
   const { addProgressPhoto, removeProgressPhoto, profile } = useTrainerStore();
-  const viewShotRef = useRef<ViewShot>(null);
+  const viewShotRef = useRef<ViewShotRef>(null);
 
   const [addPhotoModalVisible, setAddPhotoModalVisible] = useState(false);
   const [selectedImageUri, setSelectedImageUri] = useState<string | null>(null);

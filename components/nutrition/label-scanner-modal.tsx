@@ -137,7 +137,7 @@ export function LabelScannerModal({ visible, onClose, onExtracted }: Props) {
               <View style={{ flex: 1, width: '100%' }}>
                 <CameraView
                   ref={cameraRef}
-                  style={StyleSheet.absoluteFillObject}
+                  style={StyleSheet.absoluteFill}
                   facing="back"
                   onCameraReady={() => setCameraReady(true)}
                 />
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     fontFamily: F.sansSemiBold,
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 24,
